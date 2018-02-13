@@ -7,24 +7,30 @@ output: github_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## GitHub Documents
+## Bio3D Class 11
 
-This is an R Markdown format used for publishing markdown documents to GitHub. When you click the **Knit** button all R code chunks are run and a markdown file (.md) suitable for publishing to GitHub is generated.
+Read some PDB files and do some analysis
 
-## Including Code
+```{r}
+library(bio3d)
 
-You can include R code in the document as follows:
-
-```{r cars}
-summary(cars)
+# Download some example PDB files 
+ids <- c("1TND_B","1AGR_A","1TAG_A","1GG2_A","1KJY_A","4G5Q_A")
+files <- get.pdb(ids, split = TRUE)
 ```
 
-## Including Plots
+Lets align these structures with the `pdbaln()` function.
 
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
+```{r}
+# Extract and align the chains we are interested in  
+pdbs <- pdbaln(files, fit = TRUE)
+pdbs
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+Sequence analysis
+```{r}
+# Calculate sequence 
+identity  seqidentity(pdbs)
+identity
+```
+
