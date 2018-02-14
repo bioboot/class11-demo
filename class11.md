@@ -1,10 +1,16 @@
-Class 11 section3 onward
+Class 11 Section 3 Onward
 ================
 
 Bio3D Class 11
 --------------
 
-Read some PDB files and do some analysis
+If you dont have the [bio3d package](http://thegrantlab.org/bio3d/) available then you will need to do a one-time-only install from within R like so:
+
+``` r
+install.packages("bio3d")
+```
+
+NOw we are sure wi have the package lets load it and read some PDB files for analysis. Note in the code-block below we can add the option `warning=FALSE` to trun off the printing of the warning msg about files already existing.
 
 ``` r
 library(bio3d)
@@ -14,35 +20,7 @@ ids <- c("1TND_B","1AGR_A","1TAG_A","1GG2_A","1KJY_A","4G5Q_A")
 files <- get.pdb(ids, split = TRUE)
 ```
 
-    ## Warning in get.pdb(ids, split = TRUE): ./1TND.pdb exists. Skipping download
-
-    ## Warning in get.pdb(ids, split = TRUE): ./1AGR.pdb exists. Skipping download
-
-    ## Warning in get.pdb(ids, split = TRUE): ./1TAG.pdb exists. Skipping download
-
-    ## Warning in get.pdb(ids, split = TRUE): ./1GG2.pdb exists. Skipping download
-
-    ## Warning in get.pdb(ids, split = TRUE): ./1KJY.pdb exists. Skipping download
-
-    ## Warning in get.pdb(ids, split = TRUE): ./4G5Q.pdb exists. Skipping download
-
-    ## 
-      |                                                                       
-      |                                                                 |   0%
-      |                                                                       
-      |===========                                                      |  17%
-      |                                                                       
-      |======================                                           |  33%
-      |                                                                       
-      |================================                                 |  50%
-      |                                                                       
-      |===========================================                      |  67%
-      |                                                                       
-      |======================================================           |  83%
-      |                                                                       
-      |=================================================================| 100%
-
-Lets align these structures with the `pdbaln()` function.
+Lets align these structures with the `pdbaln()` function and print a summary of the output.
 
 ``` r
 # Extract and align the chains we are interested in  
@@ -154,7 +132,17 @@ pdbs
     ## 
     ## + attr: xyz, resno, b, chain, id, ali, resid, sse, call
 
-Sequence analysis
+I wonder how this call will work
+
+``` r
+aln2html(pdbs)
+```
+
+Can we see the results [alignment.html](alignment.html)
+
+### Sequence analysis
+
+Lets try some basic things...
 
 ``` r
 # Calculate sequence 

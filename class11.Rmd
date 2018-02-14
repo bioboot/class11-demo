@@ -1,5 +1,5 @@
 ---
-title: "Class 11 section3 onward"
+title: "Class 11 Section 3 Onward"
 output: github_document
 ---
 
@@ -9,9 +9,16 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Bio3D Class 11
 
-Read some PDB files and do some analysis
+If you dont have the [bio3d package](http://thegrantlab.org/bio3d/) available then you will need to do a one-time-only install from within R like so:
 
-```{r}
+```{r, eval=FALSE}
+install.packages("bio3d")
+```
+
+
+NOw we are sure wi have the package lets load it and read some PDB files for analysis. Note in the code-block below we can add the option `warning=FALSE` to trun off the printing of the warning msg about files already existing.
+
+```{r, warning=FALSE, results='hide'}
 library(bio3d)
 
 # Download some example PDB files 
@@ -19,7 +26,7 @@ ids <- c("1TND_B","1AGR_A","1TAG_A","1GG2_A","1KJY_A","4G5Q_A")
 files <- get.pdb(ids, split = TRUE)
 ```
 
-Lets align these structures with the `pdbaln()` function.
+Lets align these structures with the `pdbaln()` function and print a summary of the output.
 
 ```{r}
 # Extract and align the chains we are interested in  
@@ -27,10 +34,22 @@ pdbs <- pdbaln(files, fit = TRUE)
 pdbs
 ```
 
-Sequence analysis
+I wonder how this call will work
+
+```{r}
+aln2html(pdbs)
+```
+
+Can we see the results [alignment.html](alignment.html)
+
+
+### Sequence analysis
+
+Lets try some basic things...
+
 ```{r}
 # Calculate sequence 
-identity  seqidentity(pdbs)
+identity <- seqidentity(pdbs)
 identity
 ```
 
