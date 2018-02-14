@@ -4,13 +4,13 @@ Class 11 Section 3 Onward
 Bio3D Class 11
 --------------
 
-If you dont have the [bio3d package](http://thegrantlab.org/bio3d/) available then you will need to do a one-time-only install from within R like so:
+If you don't have the [bio3d package](http://thegrantlab.org/bio3d/) available then you will need to do a one-time-only install from within R like so:
 
 ``` r
 install.packages("bio3d")
 ```
 
-NOw we are sure wi have the package lets load it and read some PDB files for analysis. Note in the code-block below we can add the option `warning=FALSE` to trun off the printing of the warning msg about files already existing.
+Now we are sure we have the package lets load it and read some PDB files for analysis. Note in the code-block below we can add the option `warning=FALSE` to turn off the printing of the warning msg about files already existing.
 
 ``` r
 library(bio3d)
@@ -171,3 +171,72 @@ identity
     ## ./split_chain/1GG2_A.pdb                    0.991                    0.994
     ## ./split_chain/1KJY_A.pdb                    1.000                    1.000
     ## ./split_chain/4G5Q_A.pdb                    1.000                    1.000
+
+and RMSD
+
+``` r
+# Calculate RMSD  
+rd <- rmsd(pdbs)   
+```
+
+    ## Warning in rmsd(pdbs): No indices provided, using the 314 non NA positions
+
+Lets add some names to our RMSD matrix for convenience
+
+``` r
+rownames(rd) <- basename.pdb(pdbs$id)
+colnames(rd) <- basename.pdb(pdbs$id)
+rd
+```
+
+    ##        1TND_B 1AGR_A 1TAG_A 1GG2_A 1KJY_A 4G5Q_A
+    ## 1TND_B  0.000  1.042  1.281  1.651  2.098  2.367
+    ## 1AGR_A  1.042  0.000  1.628  1.811  1.949  2.244
+    ## 1TAG_A  1.281  1.628  0.000  1.730  1.840  1.885
+    ## 1GG2_A  1.651  1.811  1.730  0.000  1.901  2.032
+    ## 1KJY_A  2.098  1.949  1.840  1.901  0.000  1.225
+    ## 4G5Q_A  2.367  2.244  1.885  2.032  1.225  0.000
+
+And cluster into 2 or 3 grps?
+
+``` r
+# Clustering  
+hc <- hclust(as.dist(rd))  
+grps <- cutree(hc, k=3) 
+```
+
+and a plot...
+
+``` r
+# Plot results as dendrogram  
+hclustplot(hc, k=3)
+```
+
+![](class11_files/figure-markdown_github/unnamed-chunk-9-1.png)
+
+and try a fancy heatmap
+
+``` r
+library(pheatmap)
+pheatmap(rd)
+```
+
+![](class11_files/figure-markdown_github/unnamed-chunk-10-1.png)
+
+Play with colors and add a little gap for our first clear grp
+
+``` r
+co <- colorRampPalette( c("white", "firebrick3"))
+pheatmap(rd, color = co(15), cutree_row = 2, cutree_col = 2)
+```
+
+![](class11_files/figure-markdown_github/unnamed-chunk-11-1.png)
+
+and some sequence conservation analysis
+
+``` r
+x <- conserv(pdbs)
+plot(x, typ="h", xlab="Alignment Position", ylab="Conservation")
+```
+
+![High value bars represent conserved positions/residues](class11_files/figure-markdown_github/unnamed-chunk-12-1.png)

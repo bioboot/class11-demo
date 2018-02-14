@@ -9,14 +9,14 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Bio3D Class 11
 
-If you dont have the [bio3d package](http://thegrantlab.org/bio3d/) available then you will need to do a one-time-only install from within R like so:
+If you don't have the [bio3d package](http://thegrantlab.org/bio3d/) available then you will need to do a one-time-only install from within R like so:
 
 ```{r, eval=FALSE}
 install.packages("bio3d")
 ```
 
 
-NOw we are sure wi have the package lets load it and read some PDB files for analysis. Note in the code-block below we can add the option `warning=FALSE` to trun off the printing of the warning msg about files already existing.
+Now we are sure we have the package lets load it and read some PDB files for analysis. Note in the code-block below we can add the option `warning=FALSE` to turn off the printing of the warning msg about files already existing.
 
 ```{r, warning=FALSE, results='hide'}
 library(bio3d)
@@ -51,5 +51,60 @@ Lets try some basic things...
 # Calculate sequence 
 identity <- seqidentity(pdbs)
 identity
+```
+
+and RMSD
+
+
+
+```{r}
+# Calculate RMSD  
+rd <- rmsd(pdbs)   
+```
+
+Lets add some names to our RMSD matrix for convenience
+
+```{r}
+rownames(rd) <- basename.pdb(pdbs$id)
+colnames(rd) <- basename.pdb(pdbs$id)
+rd
+```
+
+And cluster into 2 or 3 grps?
+
+```{r}
+# Clustering  
+hc <- hclust(as.dist(rd))  
+grps <- cutree(hc, k=3) 
+```
+
+and a plot...
+
+```{r}
+# Plot results as dendrogram  
+hclustplot(hc, k=3)
+```
+
+
+
+and try a fancy heatmap
+
+```{r}
+library(pheatmap)
+pheatmap(rd)
+```
+
+Play with colors and add a little gap for our first clear grp
+
+```{r}
+co <- colorRampPalette( c("white", "firebrick3"))
+pheatmap(rd, color = co(15), cutree_row = 2, cutree_col = 2)
+```
+
+and some sequence conservation analysis
+
+```{r, fig.cap="High value bars represent conserved positions/residues"}
+x <- conserv(pdbs)
+plot(x, typ="h", xlab="Alignment Position", ylab="Conservation")
 ```
 
