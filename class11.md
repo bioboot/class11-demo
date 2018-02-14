@@ -1,6 +1,19 @@
 Class 11 Section 3 Onward
 ================
 
+``` r
+#knitr::knit_hooks$set(webgl = hook_webgl)
+knitr::knit_hooks$set(rgl = function(before, options, envir) {
+  if (!before) {
+    ## after a chunk has been evaluated
+    if (rgl.cur() == 0) return()  # no active device
+    name = paste(options$fig.path, options$label, sep = '')
+    rgl.snapshot(paste(name, '.png', sep = ''), fmt = 'png')
+    return(paste('\\includegraphics{', name, '}\n', sep = ''))
+  }
+})
+```
+
 Bio3D Class 11
 --------------
 
@@ -212,7 +225,7 @@ and a plot...
 hclustplot(hc, k=3)
 ```
 
-![](class11_files/figure-markdown_github/unnamed-chunk-9-1.png)
+![](class11_files/figure-markdown_github/unnamed-chunk-10-1.png)
 
 and try a fancy heatmap
 
@@ -221,7 +234,7 @@ library(pheatmap)
 pheatmap(rd)
 ```
 
-![](class11_files/figure-markdown_github/unnamed-chunk-10-1.png)
+![](class11_files/figure-markdown_github/unnamed-chunk-11-1.png)
 
 Play with colors and add a little gap for our first clear grp
 
@@ -230,7 +243,7 @@ co <- colorRampPalette( c("white", "firebrick3"))
 pheatmap(rd, color = co(15), cutree_row = 2, cutree_col = 2)
 ```
 
-![](class11_files/figure-markdown_github/unnamed-chunk-11-1.png)
+![](class11_files/figure-markdown_github/unnamed-chunk-12-1.png)
 
 and some sequence conservation analysis
 
@@ -239,4 +252,28 @@ x <- conserv(pdbs)
 plot(x, typ="h", xlab="Alignment Position", ylab="Conservation")
 ```
 
-![High value bars represent conserved positions/residues](class11_files/figure-markdown_github/unnamed-chunk-12-1.png)
+![High value bars represent conserved positions/residues](class11_files/figure-markdown_github/unnamed-chunk-13-1.png)
+
+PCA example
+-----------
+
+Now for some PCA of these structures
+
+``` r
+pc <- pca(pdbs, rm.gaps=TRUE)
+plot(pc, col=grps)
+```
+
+![](class11_files/figure-markdown_github/unnamed-chunk-14-1.png)
+
+And a 3D plot
+
+``` r
+library(rgl)
+```
+
+    ## Warning: package 'rgl' was built under R version 3.4.3
+
+``` r
+plot3d(pc$z[,1], pc$z[,2], pc$z[,3], col=grps, type="s")
+```

@@ -7,6 +7,19 @@ output: github_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+```{r}
+#knitr::knit_hooks$set(webgl = hook_webgl)
+knitr::knit_hooks$set(rgl = function(before, options, envir) {
+  if (!before) {
+    ## after a chunk has been evaluated
+    if (rgl.cur() == 0) return()  # no active device
+    name = paste(options$fig.path, options$label, sep = '')
+    rgl.snapshot(paste(name, '.png', sep = ''), fmt = 'png')
+    return(paste('\\includegraphics{', name, '}\n', sep = ''))
+  }
+})
+```
+
 ## Bio3D Class 11
 
 If you don't have the [bio3d package](http://thegrantlab.org/bio3d/) available then you will need to do a one-time-only install from within R like so:
@@ -106,5 +119,22 @@ and some sequence conservation analysis
 ```{r, fig.cap="High value bars represent conserved positions/residues"}
 x <- conserv(pdbs)
 plot(x, typ="h", xlab="Alignment Position", ylab="Conservation")
+```
+
+## PCA example
+
+Now for some PCA of these structures
+
+```{r}
+pc <- pca(pdbs, rm.gaps=TRUE)
+plot(pc, col=grps)
+```
+
+And a 3D plot
+
+```{r fancy-rgl, rgl=TRUE}
+library(rgl)
+
+plot3d(pc$z[,1], pc$z[,2], pc$z[,3], col=grps, type="s")
 ```
 
