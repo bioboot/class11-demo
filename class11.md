@@ -260,3 +260,42 @@ library(rgl)
 
 plot3d(pc$z[,1], pc$z[,2], pc$z[,3], col=grps, type="s")
 ```
+
+Stop for the day here
+---------------------
+
+Report in session setup.
+
+``` r
+sessionInfo()
+```
+
+    ## R version 3.4.1 (2017-06-30)
+    ## Platform: x86_64-apple-darwin15.6.0 (64-bit)
+    ## Running under: macOS Sierra 10.12.6
+    ## 
+    ## Matrix products: default
+    ## BLAS: /Library/Frameworks/R.framework/Versions/3.4/Resources/lib/libRblas.0.dylib
+    ## LAPACK: /Library/Frameworks/R.framework/Versions/3.4/Resources/lib/libRlapack.dylib
+    ## 
+    ## locale:
+    ## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+    ## 
+    ## attached base packages:
+    ## [1] stats     graphics  grDevices utils     datasets  methods   base     
+    ## 
+    ## other attached packages:
+    ## [1] rgl_0.99.9     pheatmap_1.0.8 bio3d_2.3-3   
+    ## 
+    ## loaded via a namespace (and not attached):
+    ##  [1] Rcpp_0.12.14       knitr_1.18         magrittr_1.5      
+    ##  [4] munsell_0.4.3      xtable_1.8-2       colorspace_1.3-2  
+    ##  [7] R6_2.2.2           stringr_1.2.0      highr_0.6         
+    ## [10] plyr_1.8.4         tools_3.4.1        parallel_3.4.1    
+    ## [13] grid_3.4.1         gtable_0.2.0       htmltools_0.3.6   
+    ## [16] crosstalk_1.0.0    yaml_2.1.16        rprojroot_1.3-2   
+    ## [19] digest_0.6.14      shiny_1.0.5        RColorBrewer_1.1-2
+    ## [22] htmlwidgets_1.0    mime_0.5           evaluate_0.10.1   
+    ## [25] rmarkdown_1.8      stringi_1.1.6      compiler_3.4.1    
+    ## [28] scales_0.5.0       backports_1.1.2    jsonlite_1.5      
+    ## [31] httpuv_1.3.5

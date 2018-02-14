@@ -138,3 +138,10 @@ library(rgl)
 plot3d(pc$z[,1], pc$z[,2], pc$z[,3], col=grps, type="s")
 ```
 
+## Stop for the day here 
+
+Report in session setup.
+```{r}
+sessionInfo()
+```
+
