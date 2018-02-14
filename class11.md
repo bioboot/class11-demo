@@ -1,19 +1,6 @@
 Class 11 Section 3 Onward
 ================
 
-``` r
-#knitr::knit_hooks$set(webgl = hook_webgl)
-knitr::knit_hooks$set(rgl = function(before, options, envir) {
-  if (!before) {
-    ## after a chunk has been evaluated
-    if (rgl.cur() == 0) return()  # no active device
-    name = paste(options$fig.path, options$label, sep = '')
-    rgl.snapshot(paste(name, '.png', sep = ''), fmt = 'png')
-    return(paste('\\includegraphics{', name, '}\n', sep = ''))
-  }
-})
-```
-
 Bio3D Class 11
 --------------
 
@@ -270,10 +257,6 @@ And a 3D plot
 
 ``` r
 library(rgl)
-```
 
-    ## Warning: package 'rgl' was built under R version 3.4.3
-
-``` r
 plot3d(pc$z[,1], pc$z[,2], pc$z[,3], col=grps, type="s")
 ```

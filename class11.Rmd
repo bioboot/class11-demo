@@ -7,7 +7,7 @@ output: github_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-```{r}
+```{r, include=FALSE}
 #knitr::knit_hooks$set(webgl = hook_webgl)
 knitr::knit_hooks$set(rgl = function(before, options, envir) {
   if (!before) {
@@ -132,7 +132,7 @@ plot(pc, col=grps)
 
 And a 3D plot
 
-```{r fancy-rgl, rgl=TRUE}
+```{r fancy-rgl, rgl=TRUE, warning=FALSE}
 library(rgl)
 
 plot3d(pc$z[,1], pc$z[,2], pc$z[,3], col=grps, type="s")
