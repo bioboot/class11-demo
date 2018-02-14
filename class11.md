@@ -261,6 +261,49 @@ library(rgl)
 plot3d(pc$z[,1], pc$z[,2], pc$z[,3], col=grps, type="s")
 ```
 
+Normal mode analysis
+--------------------
+
+Function `nma()` provides normal mode analysis (NMA) on the complete structure ensemble. This facilitates characterising and comparing flexibility profiles of related protein structures.
+
+``` r
+# NMA all structures 
+modes <- nma(pdbs) 
+```
+
+    ## 
+    ## Details of Scheduled Calculation:
+    ##   ... 6 input structures 
+    ##   ... storing 936 eigenvectors for each structure 
+    ##   ... dimension of x$U.subspace: ( 942x936x6 )
+    ##   ... coordinate superposition prior to NM calculation 
+    ##   ... aligned eigenvectors (gap containing positions removed)  
+    ##   ... estimated memory usage of final 'eNMA' object: 40.4 Mb 
+    ## 
+    ## 
+      |                                                                       
+      |                                                                 |   0%
+      |                                                                       
+      |===========                                                      |  17%
+      |                                                                       
+      |======================                                           |  33%
+      |                                                                       
+      |================================                                 |  50%
+      |                                                                       
+      |===========================================                      |  67%
+      |                                                                       
+      |======================================================           |  83%
+      |                                                                       
+      |=================================================================| 100%
+
+``` r
+plot(modes, pdbs, col=grps, spread=TRUE)
+```
+
+    ## Extracting SSE from pdbs$sse attribute
+
+![](class11_files/figure-markdown_github/unnamed-chunk-15-1.png)
+
 Stop for the day here
 ---------------------
 

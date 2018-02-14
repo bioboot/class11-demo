@@ -138,6 +138,18 @@ library(rgl)
 plot3d(pc$z[,1], pc$z[,2], pc$z[,3], col=grps, type="s")
 ```
 
+## Normal mode analysis
+Function `nma()` provides normal mode analysis (NMA) on the complete structure ensemble. This facilitates characterising and comparing flexibility profiles of related protein structures.
+
+```{r}
+
+# NMA all structures 
+modes <- nma(pdbs) 
+plot(modes, pdbs, col=grps, spread=TRUE)
+
+```
+
+
 ## Stop for the day here 
 
 Report in session setup.
