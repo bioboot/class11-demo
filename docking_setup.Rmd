@@ -1,0 +1,84 @@
+---
+title: "Docking Hands-On"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Prep Structure for Docking
+
+Download and prep HIV-1 PR structur `1hsg`. This creates the file in my working directory!
+
+```{r}
+library(bio3d)
+
+file.name <- get.pdb("1hsg")
+file.name
+```
+
+
+## Read and examine structure
+
+```{r}
+pdb <- read.pdb(file.name)
+pdb
+```
+
+## Trim to protein and ligand
+Create seperate PDB files for protein and ligand and ignore water
+
+```{r}
+prot <- trim.pdb(pdb, "protein")
+prot
+```
+
+```{r}
+lig <- trim.pdb(pdb, "ligand")
+lig
+```
+
+and write out files
+
+```{r}
+write.pdb(prot, file="1hsg_protein.pdb")  
+write.pdb(lig, file="1hsg_ligand.pdb")
+```
+
+## Run docking with ADT files
+
+```{r}
+# 
+```
+
+## Read results
+
+```{r}
+res <- read.pdb("all.pdbqt", multi=TRUE)
+res
+```
+
+
+Output a PDB for VMD
+
+```{r}
+write.pdb(res, "results.pdb")
+
+```
+
+
+## RMSD to crystal structure experiment
+
+```{r}
+res <- read.pdb("all.pdbqt", multi=TRUE)
+ori <- read.pdb("ligand.pdbqt")
+rmsd(ori, res)
+```
+
+
+
+
+
+
+
